@@ -1,4 +1,4 @@
-name: brain4xt2s
+name: text2speech
 channels:
   - anaconda
   - conda-forge

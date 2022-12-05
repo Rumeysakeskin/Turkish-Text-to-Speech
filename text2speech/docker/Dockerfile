@@ -1,12 +1,12 @@
 FROM continuumio/anaconda
 WORKDIR /Path/to/working/directory/text2speech/
 
-RUN conda create -n brain4xt2s python=3.7
+RUN conda create -n text2speech python=3.7
 
-COPY brain4xt2s.yml .
-RUN conda env create -f brain4xt2s.yml
+COPY environment.yml .
+RUN conda env create -f environment.yml
 
-RUN echo "source activate brain4xt2s" > ~/.bashrc
+RUN echo "source activate text2speech" > ~/.bashrc
 
 # Set PATH environment variables
-ENV PATH /opt/conda/envs/brain4xt2s:$PATH
+ENV PATH /opt/conda/envs/text2speech:$PATH
