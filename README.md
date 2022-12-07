@@ -15,3 +15,33 @@ $ python -m ipykernel install --user --name=torcht2s
 $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
 Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
+
+### Data Preperation
+
+- Crate your data file as the following format and mount under the `text2speech/Fastpitch/dataset/` location.  
+```
+wav/42089-yeraltindanNotlar-8.wav|çocuklar da sevdikleri bir şey bekledikleri kimselere böyle bakarlar
+```
+- Preprocess the data
+Run the pre-processing script to calculate pitch and mels `text2speech/Fastpitch/data_preperation.ipynb`
+```
+python prepare_dataset.py --wav-text-filelists dataset/tts_data.txt --n-workers 0 --batch-size 1 --dataset-path dataset --extract-pitch --f0-method pyin --extract-mels
+```
+The complete dataset has the following structure:
+```
+./dataset
+|-mels
+|-pitch
+|-wavs
+|-tts_data.txt
+```
+
+
+
+
+
+
+
+
+
+
