@@ -4,12 +4,9 @@
 
 Choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as `/text2speech/docker/Dockerfile` 
 
-- Build Docker
+- Build and run docker
 ```
 $ docker build --no-cache -t torcht2s .
-```
-- Run Docker container
-```
 $ docker run -it --rm --gpus all -p 2222:8888 -v /your/working/directory/text-to-speech/text2speech:/your/working/directory/text-to-speech/text2speech torcht2s
 ```
 - Add environment to jupyter notebook and launch jupyter notebook 
