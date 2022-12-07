@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import atexit
 import glob
 import re
@@ -87,7 +88,7 @@ def init(log_fpath, log_dir, enabled=True, tb_subsets=[], **tb_kw):
 
     if enabled:
         backends = [
-            JSONStreamBackend(Verbosity.DEFAULT, log_fpath, append=True),
+            JSONStreamBackend(Verbosity.DEFAULT, log_fpath), #, append=True
             JSONStreamBackend(Verbosity.DEFAULT, unique_log_fpath(log_fpath)),
             StdOutBackend(Verbosity.VERBOSE, step_format=stdout_step_format,
                           metric_format=stdout_metric_format)

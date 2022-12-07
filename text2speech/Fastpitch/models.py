@@ -20,8 +20,8 @@ import torch
 
 from common.text.symbols import get_symbols, get_pad_idx
 from common.utils import DefaultAttrDict, AttrDict
-from text2speech.Fastpitch.fastpitch.model import FastPitch
-from text2speech.Fastpitch.fastpitch.model_jit import FastPitchJIT
+from fastpitch.model import FastPitch
+from fastpitch.model_jit import FastPitchJIT
 from hifigan.models import Generator
 
 try:

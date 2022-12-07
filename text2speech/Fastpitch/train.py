@@ -64,7 +64,7 @@ def parse_args(parser):
     train = parser.add_argument_group('training setup')
     train.add_argument('--epochs', type=int, required=True,
                        help='Number of total epochs to run')
-    train.add_argument('--epochs-per-checkpoint', type=int, default=50,
+    train.add_argument('--epochs-per-checkpoint', type=int, default=5,
                        help='Number of epochs per checkpoint')
     train.add_argument('--checkpoint-path', type=str, default=None,
                        help='Checkpoint path to resume training')
@@ -122,9 +122,9 @@ def parse_args(parser):
     data.add_argument('--validation-files', type=str, nargs='*',
                       required=True, help='Paths to validation filelists')
     data.add_argument('--text-cleaners', nargs='*',
-                      default=['english_cleaners'], type=str,
+                      default=['turkish_cleaners'], type=str,
                       help='Type of text cleaners for input text')
-    data.add_argument('--symbol-set', type=str, default='english_basic',
+    data.add_argument('--symbol-set', type=str, default='turkish_basic',
                       help='Define symbol set for input text')
     data.add_argument('--p-arpabet', type=float, default=0.0,
                       help='Probability of using arpabets instead of graphemes '
@@ -137,7 +137,7 @@ def parse_args(parser):
                       help='Capture leading silence with a space token')
     data.add_argument('--append-space-to-text', action='store_true',
                       help='Capture trailing silence with a space token')
-    data.add_argument('--num-workers', type=int, default=6,
+    data.add_argument('--num-workers', type=int, default=2,
                       help='Subprocesses for train and val DataLoaders')
     data.add_argument('--trainloader-repeats', type=int, default=100,
                       help='Repeats the dataset to prolong epochs')
@@ -290,7 +290,7 @@ def main():
         cmudict.initialize(args.cmudict_path, args.heteronyms_path)
 
     distributed_run = args.world_size > 1
-
+    
     torch.manual_seed(args.seed + args.local_rank)
     np.random.seed(args.seed + args.local_rank)
 
