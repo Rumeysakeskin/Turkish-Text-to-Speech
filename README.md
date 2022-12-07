@@ -30,10 +30,10 @@ python prepare_dataset.py --wav-text-filelists dataset/tts_data.txt --n-workers 
 The complete dataset has the following structure:
 ```
 ./dataset
-|-mels
-|-pitch
-|-wavs
-|-tts_data.txt
+├── mels
+├── pitch
+├── wavs
+├── tts_data.txt
 ```
 
 
