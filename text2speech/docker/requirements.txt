@@ -1,0 +1,12 @@
+inflect
+unidecode
+torch
+numpy
+scipy
+librosa
+cython
+matplotlib
+fastapi
+hydra-core
+uvicorn
+service_streamer
