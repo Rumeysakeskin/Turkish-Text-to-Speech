@@ -2,8 +2,8 @@
 ## Table Of Contents
 - Setup
 - Data Preperation
-- Train Fastpitch from scratch (Spectrogram Generator)
-- Fine-tune the model
+- Training Fastpitch from scratch (Spectrogram Generator)
+- Fine-tuning the model with HiFi-GAN
 
 ### Setup
 
@@ -57,7 +57,7 @@ The complete dataset has the following structure:
 ├── tts_data_pitch_val.txt
 ```
 
-### Train Fastpitch from scratch (Spectrogram Generator)
+### Training Fastpitch from scratch (Spectrogram Generator)
 The training will produce a FastPitch model capable of generating mel-spectrograms from raw text. It will be serialized as a single `.pt` checkpoint file, along with a series of intermediate checkpoints.
 ```
 python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
@@ -68,7 +68,7 @@ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \
                 --load-pitch-from-disk
 ```
 
-### Fine-tune the model
+### Fine-tuning the model with HiFi-GAN
 Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt)
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
