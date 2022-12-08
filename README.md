@@ -73,10 +73,10 @@ python extract_mels.py --cuda -o data/mels-fastpitch-tr22khz \
     --dataset-files data/tts_pitch_data.txt --load-pitch-from-disk \
     --checkpoint-path data/pretrained_fastpicth_model/FastPitch_checkpoint.pt -bs 16
  ```
-Mel-spectrograms should now be prepared in the data/mels-fastpitch-tr22khz directory. The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
+Mel-spectrograms should now be prepared in the `Hifigan/data/mels-fastpitch-tr22khz` directory. The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
 
 2. Fine-tune the Fastpitch model with HiFi-GAN 
-This step will produce another .pt HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
+This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
 
 
 
