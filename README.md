@@ -52,7 +52,31 @@ The complete dataset has the following structure:
 ├── tts_data_pitch_val.txt
 ```
 
+### Train Fastpitch from scratch (Spectrogram Generator)
+The training will produce a FastPitch model capable of generating mel-spectrograms from raw text. It will be serialized as a single `.pt` checkpoint file, along with a series of intermediate checkpoints.
+```
+python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
+                --output saved_fastpicth_models/ \
+                --training-files dataset/tts_data_pitch_train.txt \ 
+                --validation-files dataset/tts_data_pitch_val.txt \ 
+                --epochs 1000 --learning-rate 0.001 --batch-size 32 \
+                --load-pitch-from-disk
+```
 
+### Fine-tune the model
+Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt)
+
+1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
+```
+python extract_mels.py --cuda -o data/mels-fastpitch-tr22khz \ 
+    --dataset-path /text2speech/Fastpitch/dataset \
+    --dataset-files data/tts_pitch_data.txt --load-pitch-from-disk \
+    --checkpoint-path data/pretrained_fastpicth_model/FastPitch_checkpoint.pt -bs 16
+ ```
+Mel-spectrograms should now be prepared in the data/mels-fastpitch-tr22khz directory. The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
+
+2. Fine-tune the Fastpitch model with HiFi-GAN 
+This step will produce another .pt HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
 
 
 
