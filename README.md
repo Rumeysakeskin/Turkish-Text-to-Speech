@@ -3,7 +3,7 @@
 - Setup
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
-- Fine-tuning the model with HiFi-GAN
+- Fine-tuning the model with HiFi-GAN (Waveforms Generator from input mel-spectrograms)
 
 ### Setup
 
@@ -28,6 +28,8 @@ Follow these steps to use custom dataset.
 <audio file path>|<transcript>
 ```
 - Preprocess the data
+To speed-up training, those could be generated during the pre-processing step and read directly from the disk during training.
+
 2. Run the pre-processing script to calculate pitch and mels with `text2speech/Fastpitch/data_preperation.ipynb`
 ```
 python prepare_dataset.py \ 
