@@ -1,4 +1,9 @@
 # Text-to-Speech
+## Table Of Contents
+- Setup
+- Data Preperation
+- Train Fastpitch from scratch (Spectrogram Generator)
+- Fine-tune the model
 
 ### Setup
 
