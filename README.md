@@ -1,4 +1,4 @@
-# Text-to-Speech
+# Turkish Text-to-Speech
 ## Table Of Contents
 - Setup
 - Data Preperation
@@ -20,6 +20,9 @@ $ python -m ipykernel install --user --name=torcht2s
 $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
 3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
+
+### Normalization and Rule-based g2p module for Turkish
+
 
 ### Data Preperation
 Follow these steps to use custom dataset.
