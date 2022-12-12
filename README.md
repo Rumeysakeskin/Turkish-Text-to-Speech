@@ -48,7 +48,7 @@ python prepare_dataset.py \
 3. Prepare file lists with paths to pre-calculated pitch running `create_picth_text_file()` from `text2speech/Fastpitch/data_preperation.ipynb` 
 Those filelists should list a single utterance per line as: 
 ```
-<audio file path>|<audio pitch .pt file path>|<transcript>
+<mel or wav file path>|<pitch .pt file path>|<text>|<speaker_id>
 ```
 The complete dataset has the following structure:
 ```
