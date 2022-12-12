@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 import math
 
@@ -35,6 +36,59 @@ factorizations_list = [
     [1e15, "katrilyon"],
     [1e18, "kentilyon"]
 ]
+
+_abbreviations = [(re.compile('\\b%s\\.' % x[0], re.IGNORECASE), x[1]) for x in [
+    ('adr', 'adres'),
+    ('agy', 'adı geçen yapıt'),
+    ('alb', 'albay'),
+    ('ank', 'ankara'),
+    ('ist', 'istanbul'),
+    ('apt', 'apartman'),
+    ('sok', 'sokak'),
+    ('cad', 'cadde'),
+    ('astsb', 'astsubay'),
+    ('atgm', 'asteğmen'),
+    ('bkz', 'bakınız'),
+    ('bknz', 'bakınız'),
+    ('bnb', 'binbaşı'),
+    ('bşk', 'başkanlığı'),
+    ('bştbp', 'baştabip'),
+    ('bul', 'bulvarı'),
+    ('bulv', 'bulvarı'),
+    ('cal', 'kalori'),
+    ('cm', 'santimetre'),
+    ('m', 'metre'),
+    ('gr', 'gram'),
+    ('çvş', 'çavuş'),
+    ('dl', 'desilitre'),
+    ('dm', 'desimetre'),
+    ('doç', 'doçent'),
+    ('dr', 'doktor'),
+    ('dz', 'deniz'),
+    ('kuv', 'kuvvetleri'),
+    ('yrb', 'yarbay'),
+    ('yy', 'yüzyıl'),
+    ('yard', 'yardımcı'),
+    ('müh', 'mühendis'),
+    ('ütğm', 'üsteğmen'),
+    ('uzm', 'uzman'),
+    ('müd', 'müdür'),
+    ('mm', 'milimetre'),    
+    ('mey', 'meydanı'),
+    ('mim', 'mimar'),    
+    ('mb', 'megabayt'),
+    ('gb', 'cigabayt'),
+    ('lt', 'litre'),
+    ('ltd', 'limited'),
+    ('kw', 'kilovat'),
+    ('km', 'kilometre'),
+    ('hrp', 'harp'),
+    ('gen', 'general'),
+    ('astsb', 'astsubay'),
+    ('atgm', 'asteğmen'),
+    ('ens', 'enstitüsü'),
+    ('ecz', 'eczanesi'),
+]]
 
 
 def convert_integer_pronunciation(val: int) -> str:
@@ -137,6 +191,8 @@ def normalize_punctuations(text: str) -> str:
 
     text = text.replace("-", " ")
     text = text.replace("°", " derece")
+    text = text.replace("½", " yarım")
+    text = text.replace("¼", " çeyrek")
     text = text.replace("+", " artı ")
     text = text.replace("/", " bölü ")
     text = text.replace("*", " çarpı ")
@@ -149,6 +205,21 @@ def normalize_punctuations(text: str) -> str:
     return text
 
 
+_url_re = re.compile(r'([a-zA-Z])\.(com|gov|org)')
+def expand_urls(m):
+    if m.group(2) == "com":
+        group_2 = "kom"
+    else:
+        group_2 = m.group(2)
+    return f'{m.group(1)} nokta {group_2}'
+
+
+def normalize_abbreviations(text):
+    for regex, replacement in _abbreviations:
+        text = re.sub(regex, replacement, text)
+    return text
+
+
 def normalize_text(text: str) -> str:
     """
     Normalizes punctuations and numbers to their turkish text representation
@@ -156,6 +227,13 @@ def normalize_text(text: str) -> str:
     # Writes numbers in text format, converts punctuations based on their usage in sentence, eliminate extra spaces
     text = normalize_punctuations(text)
     text = normalize_numbers(text)
+    text = normalize_abbreviations(text)
+    text = re.sub('&', ' ve ', text)
+    text = re.sub(_url_re, expand_urls, text)
+    text = re.sub("https", "h t t p s", text)
+    text = re.sub("http", "h t t p", text)
+    text = re.sub("https:", "h t t p s", text)
+    text = re.sub("http:", "h t t p", text)
     text = re.sub(" +", " ", text).strip()
     return text
 

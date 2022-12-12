@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ from https://github.com/keithito/tacotron """
 
 '''

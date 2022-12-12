@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 
 _no_period_re = re.compile(r'(No[.])(?=[ ]?[0-9])')

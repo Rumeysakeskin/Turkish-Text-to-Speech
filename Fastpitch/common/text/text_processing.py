@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ adapted from https://github.com/keithito/tacotron """
 import re
 import numpy as np
@@ -7,9 +8,9 @@ from . import cmudict
 from .numerical import _currency_re, _expand_currency
 
 
-#########
+# ########
 # REGEX #
-#########
+# ########
 
 # Regular expression matching text enclosed in curly braces for encoding
 _curly_re = re.compile(r'(.*?)\{(.+?)\}(.*)')
