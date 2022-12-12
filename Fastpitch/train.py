@@ -129,15 +129,15 @@ def parse_args(parser):
     data.add_argument('--p-arpabet', type=float, default=0.0,
                       help='Probability of using arpabets instead of graphemes '
                            'for each word; set 0 for pure grapheme training')
-    data.add_argument('--heteronyms-path', type=str, default='cmudict/heteronyms',
+    data.add_argument('--heteronyms-path', type=str, default='cmudict/heteronyms_tr',
                       help='Path to the list of heteronyms')
-    data.add_argument('--cmudict-path', type=str, default='cmudict/cmudict-0.7b',
+    data.add_argument('--cmudict-path', type=str, default='cmudict/cmudict_tr',
                       help='Path to the pronouncing dictionary')
     data.add_argument('--prepend-space-to-text', action='store_true',
                       help='Capture leading silence with a space token')
     data.add_argument('--append-space-to-text', action='store_true',
                       help='Capture trailing silence with a space token')
-    data.add_argument('--num-workers', type=int, default=2,
+    data.add_argument('--num-workers', type=int, default=4,
                       help='Subprocesses for train and val DataLoaders')
     data.add_argument('--trainloader-repeats', type=int, default=100,
                       help='Repeats the dataset to prolong epochs')
