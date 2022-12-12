@@ -2,11 +2,6 @@
 ## Table Of Contents
 - Setup
 - Normalization and Rule-based g2p module for Turkish
-
-[Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)
-
-
-
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
 - Fine-tuning the model with HiFi-GAN (Waveforms Generator from input mel-spectrograms)
@@ -28,7 +23,7 @@ $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
 
 ### Normalization and Rule-based g2p module for Turkish
-
+[Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)
 
 ### Data Preperation
 Follow these steps to use custom dataset.
