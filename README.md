@@ -1,6 +1,12 @@
 # Turkish Text-to-Speech
 ## Table Of Contents
 - Setup
+- Normalization and Rule-based g2p module for Turkish
+
+[Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)
+
+
+
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
 - Fine-tuning the model with HiFi-GAN (Waveforms Generator from input mel-spectrograms)
