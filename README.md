@@ -8,7 +8,7 @@
 
 ### Setup
 
-Choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as `/text2speech/docker/Dockerfile` 
+Choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as following:
 ```
 FROM nvcr.io/nvidia/pytorch:21.02-py3
 WORKDIR /path/to/working/directory/text2speech/
@@ -28,7 +28,19 @@ $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
 
 ### Normalization and Rule-based g2p module for Turkish
-[Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)
+In order to train speech synthesis models, sounds and phoneme sequences expressing sounds are needed. 
+Since Turkish is a phonetic language, words are expressed as they are read. That is, character sequences are constructed words in Turkish. 
+In non-phonetic languages such as English, words can be expressed with phonemes.
+To synthesize Turkish speech with English data, the words in the English dataset first must be phonetically translated into Turkish. 
+- Use [cmudict_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/cmudict_tr) and [heteronyms_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/heteronyms_tr) to prepare dataset with [Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics).
+- The following phonemes represent the Turkish pronunciation of the phonemes.
+```
+valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e', 'e:', 'f', 'g', 'gj', 'h', 'i', 'i:', 'j',
+  'k', 'l', 'm', 'n', 'N', 'o', 'o:', 'p', 'r', 's', 'S', 't', 'tS', 'u', 'u', 'v', 'y', 'y:', 'z', 'Z']
+```
+- Apply [normalization](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) for Turkish utterances.
+
+
 
 ### Data Preperation
 Follow these steps to use custom dataset.
