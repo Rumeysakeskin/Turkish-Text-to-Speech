@@ -9,7 +9,12 @@
 ### Setup
 
 Choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as `/text2speech/docker/Dockerfile` 
-
+```
+FROM nvcr.io/nvidia/pytorch:21.02-py3
+WORKDIR /path/to/working/directory/text2speech/
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+```
 1. Build and run docker
 ```
 $ docker build --no-cache -t torcht2s .
