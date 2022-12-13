@@ -4,7 +4,7 @@
 - Phonetical Conversion and Normalization for Turkish
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
-- Fine-tuning the model with HiFi-GAN (Waveforms Generator from input mel-spectrograms)
+- Fine-tuning the model with HiFi-GAN (Waveforms Generator)
 
 ### Setup
 
@@ -57,7 +57,7 @@ To speed-up training, those could be generated during the pre-processing step an
 python prepare_dataset.py \ 
     --wav-text-filelists dataset/tts_data_train.txt \ 
                          dataset/tts_data_val.txt \
-    --n-workers 0 \
+    --n-workers 16 \
     --batch-size 1 \
     --dataset-path dataset \
     --extract-pitch \
