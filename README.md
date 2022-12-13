@@ -54,8 +54,7 @@ Follow these steps to use custom dataset.
 2. Run the pre-processing script to calculate pitch and mels with `text2speech/Fastpitch/data_preperation.ipynb`
 ```
 python prepare_dataset.py \ 
-    --wav-text-filelists dataset/tts_data_train.txt \ 
-                         dataset/tts_data_val.txt \
+    --wav-text-filelists dataset/tts_data.txt \ 
     --n-workers 16 \
     --batch-size 1 \
     --dataset-path dataset \
@@ -74,10 +73,12 @@ The complete dataset has the following structure:
 ├── mels
 ├── pitch
 ├── wavs
+├── tts_data.txt  # train + val
 ├── tts_data_train.txt
 ├── tts_data_val.txt
-├── tts_data_pitch_train.txt
-├── tts_data_pitch_val.txt
+├── tts_pitch_data.txt  # train + val
+├── tts_pitch_data_train.txt
+├── tts_pitch_data_val.txt
 ```
 
 ### Training Fastpitch from scratch (Spectrogram Generator)
@@ -85,8 +86,8 @@ The training will produce a FastPitch model capable of generating mel-spectrogra
 ```
 python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
                 --output saved_fastpicth_models/ \
-                --training-files dataset/tts_data_pitch_train.txt \ 
-                --validation-files dataset/tts_data_pitch_val.txt \ 
+                --training-files dataset/tts_pitch_data_train.txt \ 
+                --validation-files dataset/tts_pitch_data_val.txt \ 
                 --epochs 1000 --learning-rate 0.001 --batch-size 32 \
                 --load-pitch-from-disk
 ```
@@ -96,9 +97,11 @@ Some mel-spectrogram generators are prone to model bias. As the spectrograms dif
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
 ```
-python extract_mels.py --cuda -o data/mels-fastpitch-tr22khz \ 
+python extract_mels.py --cuda 
+    -o data/mels-fastpitch-tr22khz \ 
     --dataset-path /text2speech/Fastpitch/dataset \
-    --dataset-files data/tts_pitch_data.txt --load-pitch-from-disk \
+    --dataset-files data/tts_pitch_data.txt 
+    --load-pitch-from-disk \
     --checkpoint-path data/pretrained_fastpicth_model/FastPitch_checkpoint.pt -bs 16
  ```
 Mel-spectrograms should now be prepared in the `Hifigan/data/mels-fastpitch-tr22khz` directory. The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
