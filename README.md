@@ -27,7 +27,7 @@ $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
 3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
 
-### Normalization and Rule-based g2p module for Turkish
+### Phonetical Conversion and Normalization for Turkish
 In order to train speech synthesis models, sounds and phoneme sequences expressing sounds are needed. 
 Since Turkish is a phonetic language, words are expressed as they are read. That is, character sequences are constructed words in Turkish. 
 In non-phonetic languages such as English, words can be expressed with phonemes.
@@ -38,8 +38,9 @@ To synthesize Turkish speech with English data, the words in the English dataset
 valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e', 'e:', 'f', 'g', 'gj', 'h', 'i', 'i:', 'j',
   'k', 'l', 'm', 'n', 'N', 'o', 'o:', 'p', 'r', 's', 'S', 't', 'tS', 'u', 'u', 'v', 'y', 'y:', 'z', 'Z']
 ```
-- Apply [normalization](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) for Turkish utterances.
-
+- Text normalization converts text from written form into its verbalized form, and it is an essential preprocessing step before text-to-speech synthesis.
+It ensures that TTS can handle all input texts without skipping unknown symbols.
+In this study, [text normalization](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) for Turkish utterances.
 
 
 ### Data Preperation
