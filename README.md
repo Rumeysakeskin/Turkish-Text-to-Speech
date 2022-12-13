@@ -1,7 +1,7 @@
 # Turkish Text-to-Speech
 ## Table Of Contents
 - Setup
-- Normalization and Rule-based g2p module for Turkish
+- Phonetical Conversion and Normalization for Turkish
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
 - Fine-tuning the model with HiFi-GAN (Waveforms Generator from input mel-spectrograms)
