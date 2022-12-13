@@ -44,13 +44,12 @@ In this study, [text normalized](https://github.com/Rumeysakeskin/text2speech/bl
 
 
 ### Data Preperation
+To speed-up training, those could be generated during the pre-processing step and read directly from the disk during training.
 Follow these steps to use custom dataset.
 1. Prepare a directory with .wav files, filelists (training/validation split of the data) with transcripts and paths to .wav files under the `text2speech/Fastpitch/dataset/` location. Those filelists should list a single utterance per line as: 
 ```
 <audio file path>|<transcript>
 ```
-- Preprocess the data
-To speed-up training, those could be generated during the pre-processing step and read directly from the disk during training.
 
 2. Run the pre-processing script to calculate pitch and mels with `text2speech/Fastpitch/data_preperation.ipynb`
 ```
