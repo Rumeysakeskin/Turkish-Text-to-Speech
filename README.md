@@ -32,7 +32,7 @@ In order to train speech synthesis models, sounds and phoneme sequences expressi
 Since Turkish is a phonetic language, words are expressed as they are read. That is, character sequences are constructed words in Turkish. 
 In non-phonetic languages such as English, words can be expressed with phonemes.
 To synthesize Turkish speech with English data, the words in the English dataset first must be phonetically translated into Turkish. 
-- Use [cmudict_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/cmudict_tr) and [heteronyms_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/heteronyms_tr) to prepare dataset with [Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics).
+- In this study, [cmudict_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/cmudict_tr) and [heteronyms_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/heteronyms_tr) were used. CMUDict ([Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)) is a dictionary that phonetically expresses about 1.5M words in Turkish.
 - The following phonemes represent the Turkish pronunciation of the phonemes.
 ```
 valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e', 'e:', 'f', 'g', 'gj', 'h', 'i', 'i:', 'j',
