@@ -63,7 +63,7 @@ python prepare_dataset.py \
     --f0-method pyin \
     --extract-mels \
 ```
-3. Prepare file lists with paths to pre-calculated pitch running `create_picth_text_file()` from `text2speech/Fastpitch/data_preperation.ipynb` 
+3. Prepare file lists with paths to pre-calculated pitch running `create_picth_text_file(manifest_path)` from `text2speech/Fastpitch/data_preperation.ipynb` 
 Those filelists should list a single utterance per line as: 
 ```
 <mel or wav file path>|<pitch file path>|<text>|<speaker_id>
