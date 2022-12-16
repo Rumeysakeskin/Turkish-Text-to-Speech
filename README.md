@@ -5,6 +5,7 @@
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
 - Fine-tuning the model with HiFi-GAN (Waveforms Generator)
+- Inference
 
 ### Setup
 
@@ -53,9 +54,8 @@ Follow these steps to use custom dataset.
 
 2. Run the pre-processing script to calculate pitch and mels with `text2speech/Fastpitch/data_preperation.ipynb`
 ```
-python prepare_dataset.py \ 
-    --wav-text-filelists dataset/tts_data_train.txt \ 
-                         dataset/tts_data_val.txt \
+$ python prepare_dataset.py \ 
+    --wav-text-filelists dataset/tts_data.txt \ 
     --n-workers 16 \
     --batch-size 1 \
     --dataset-path dataset \
@@ -74,38 +74,59 @@ The complete dataset has the following structure:
 ├── mels
 ├── pitch
 ├── wavs
+├── tts_data.txt  # train + val
 ├── tts_data_train.txt
 ├── tts_data_val.txt
-├── tts_data_pitch_train.txt
-├── tts_data_pitch_val.txt
+├── tts_pitch_data.txt  # train + val
+├── tts_pitch_data_train.txt
+├── tts_pitch_data_val.txt
 ```
 
 ### Training Fastpitch from scratch (Spectrogram Generator)
 The training will produce a FastPitch model capable of generating mel-spectrograms from raw text. It will be serialized as a single `.pt` checkpoint file, along with a series of intermediate checkpoints.
 ```
-python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
+$ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
                 --output saved_fastpicth_models/ \
-                --training-files dataset/tts_data_pitch_train.txt \ 
-                --validation-files dataset/tts_data_pitch_val.txt \ 
+                --training-files dataset/tts_pitch_data_train.txt \ 
+                --validation-files dataset/tts_pitch_data_val.txt \ 
                 --epochs 1000 --learning-rate 0.001 --batch-size 32 \
                 --load-pitch-from-disk
 ```
 
 ### Fine-tuning the model with HiFi-GAN
-Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt)
+Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt).
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
 ```
-python extract_mels.py --cuda -o data/mels-fastpitch-tr22khz \ 
+$ python extract_mels.py --cuda 
+    -o data/mels-fastpitch-tr22khz \ 
     --dataset-path /text2speech/Fastpitch/dataset \
-    --dataset-files data/tts_pitch_data.txt --load-pitch-from-disk \
+    --dataset-files data/tts_pitch_data.txt 
+    --load-pitch-from-disk \
     --checkpoint-path data/pretrained_fastpicth_model/FastPitch_checkpoint.pt -bs 16
  ```
-Mel-spectrograms should now be prepared in the `Hifigan/data/mels-fastpitch-tr22khz` directory. The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
+Mel-spectrograms should now be prepared in the `Hifigan/data/mels-fastpitch-tr22khz` directory. 
+The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
 
 2. Fine-tune the Fastpitch model with HiFi-GAN 
-This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
 
+This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
+ ``` 
+ $ nohup python train.py --cuda --output /results/hifigan_tr22khz \
+  --epochs 1000 --dataset_path /Fastpitch/dataset \
+  --input_mels_dir /data/mels-fastpitch-tr22khz \
+  --training_files /Fastpitch/dataset/tts_data.txt \
+  --validation_files /Fastpitch/dataset/tts_data.txt \
+  --fine_tuning --fine_tune_lr_factor 3 --batch_size 16 \ 
+  --learning_rate 0.0003 --lr_decay 0.9998 --validation_interval 10 > log.txt
+ ```
+  
+3. Open another terminal and track log as following:
+``` 
+$ tail -f log.txt 
+``` 
+
+### Inference
 
 
 
