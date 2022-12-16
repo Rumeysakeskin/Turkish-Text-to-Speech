@@ -97,15 +97,18 @@ $ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \
 Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt).
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
+- Copy best-performed FastPitch output .pt file in the `text2speech/Hifigan/data/pretrained_fastpicth_model/` directory.
+- Copy manifest file `tts_pitch_data.txt` in the `text2speech/Hifigan/data/` directory.
+
 ```
 $ python extract_mels.py --cuda 
     -o data/mels-fastpitch-tr22khz \ 
     --dataset-path /text2speech/Fastpitch/dataset \
-    --dataset-files data/tts_pitch_data.txt 
+    --dataset-files data/tts_pitch_data.txt  # train + val 
     --load-pitch-from-disk \
     --checkpoint-path data/pretrained_fastpicth_model/FastPitch_checkpoint.pt -bs 16
  ```
-Mel-spectrograms should now be prepared in the `Hifigan/data/mels-fastpitch-tr22khz` directory. 
+Mel-spectrograms should now be prepared in the `text2speech/Hifigan/data/mels-fastpitch-tr22khz` directory. 
 The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
 
 2. Fine-tune the Fastpitch model with HiFi-GAN 
