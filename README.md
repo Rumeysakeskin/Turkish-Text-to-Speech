@@ -93,7 +93,7 @@ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \
 ```
 
 ### Fine-tuning the model with HiFi-GAN
-Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt)
+Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt).
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
 ```
@@ -107,7 +107,17 @@ python extract_mels.py --cuda
 Mel-spectrograms should now be prepared in the `Hifigan/data/mels-fastpitch-tr22khz` directory. The fine-tuning script will load an existing HiFi-GAN model and run several epochs of training using spectrograms generated in the last step.
 
 2. Fine-tune the Fastpitch model with HiFi-GAN 
+
 This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
+ ``` 
+ python train.py --cuda --output /results/hifigan_tr22khz \
+  --epochs 1000 --dataset_path /Fastpitch/dataset \
+  --input_mels_dir /data/mels-fastpitch-tr22khz \
+  --training_files /Fastpitch/dataset/tts_data.txt \
+  --validation_files /Fastpitch/dataset/tts_data.txt \
+  --fine_tuning --fine_tune_lr_factor 3 --batch_size 16 \ 
+  --learning_rate 0.0003 --lr_decay 0.9998 --validation_interval 10
+ ```
 
 
 
