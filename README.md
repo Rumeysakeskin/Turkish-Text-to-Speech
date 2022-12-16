@@ -54,7 +54,7 @@ Follow these steps to use custom dataset.
 
 2. Run the pre-processing script to calculate pitch and mels with `text2speech/Fastpitch/data_preperation.ipynb`
 ```
-python prepare_dataset.py \ 
+$ python prepare_dataset.py \ 
     --wav-text-filelists dataset/tts_data.txt \ 
     --n-workers 16 \
     --batch-size 1 \
@@ -85,7 +85,7 @@ The complete dataset has the following structure:
 ### Training Fastpitch from scratch (Spectrogram Generator)
 The training will produce a FastPitch model capable of generating mel-spectrograms from raw text. It will be serialized as a single `.pt` checkpoint file, along with a series of intermediate checkpoints.
 ```
-python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
+$ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
                 --output saved_fastpicth_models/ \
                 --training-files dataset/tts_pitch_data_train.txt \ 
                 --validation-files dataset/tts_pitch_data_val.txt \ 
@@ -98,7 +98,7 @@ Some mel-spectrogram generators are prone to model bias. As the spectrograms dif
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
 ```
-python extract_mels.py --cuda 
+$ python extract_mels.py --cuda 
     -o data/mels-fastpitch-tr22khz \ 
     --dataset-path /text2speech/Fastpitch/dataset \
     --dataset-files data/tts_pitch_data.txt 
@@ -112,7 +112,7 @@ The fine-tuning script will load an existing HiFi-GAN model and run several epoc
 
 This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
  ``` 
- nohup python train.py --cuda --output /results/hifigan_tr22khz \
+ $ nohup python train.py --cuda --output /results/hifigan_tr22khz \
   --epochs 1000 --dataset_path /Fastpitch/dataset \
   --input_mels_dir /data/mels-fastpitch-tr22khz \
   --training_files /Fastpitch/dataset/tts_data.txt \
@@ -123,7 +123,7 @@ This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned t
   
 3. Open another terminal and track log as following:
 ``` 
-tail -f log.txt 
+$ tail -f log.txt 
 ``` 
 
 ### Inference
