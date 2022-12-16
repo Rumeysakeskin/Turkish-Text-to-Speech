@@ -111,6 +111,7 @@ The fine-tuning script will load an existing HiFi-GAN model and run several epoc
 2. Fine-tune the Fastpitch model with HiFi-GAN 
 
 This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned to the particular FastPitch model.
+- Open a new folder `results` in the `text2speech/Hifigan` directory.  
  ``` 
  $ nohup python train.py --cuda --output /results/hifigan_tr22khz \
   --epochs 1000 --dataset_path /Fastpitch/dataset \
