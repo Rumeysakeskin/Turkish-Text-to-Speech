@@ -1,11 +1,11 @@
 # Turkish Text-to-Speech
 ## Table Of Contents
 - [Setup](#Setup)
-- Phonetical Conversion and Normalization for Turkish
-- Data Preperation
-- Training Fastpitch from scratch (Spectrogram Generator)
-- Fine-tuning the model with HiFi-GAN (Waveforms Generator)
-- Inference
+-  [Phonetical Conversion and Normalization for Turkish](#Phonetical Conversion and Normalization for Turkish)
+- [Data Preperation](#Data Preperation)
+- [Training Fastpitch from scratch (Spectrogram Generator)](#Training Fastpitch from scratch (Spectrogram Generator))
+- [Fine-tuning the model with HiFi-GAN (Waveforms Generator)](#Fine-tuning the model with HiFi-GAN)
+- [Inference](#Inference)
 
 ### Setup
 
