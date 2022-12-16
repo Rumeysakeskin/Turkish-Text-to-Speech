@@ -1,6 +1,6 @@
 # Turkish Text-to-Speech
 ## Table Of Contents
-- [Setup](### Setup)
+- [Setup](#Setup)
 - Phonetical Conversion and Normalization for Turkish
 - Data Preperation
 - Training Fastpitch from scratch (Spectrogram Generator)
