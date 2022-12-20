@@ -8,8 +8,8 @@
 - [Inference](#Inference)
 
 ### Setup
-
-Choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as following:
+This repository contains a [Dockerfile](https://github.com/Rumeysakeskin/text2speech/blob/main/docker/Dockerfile) that extends the PyTorch 21.02-py3 NGC container and encapsulates some dependencies. 
+To create your own container, choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as following format:
 ```
 FROM nvcr.io/nvidia/pytorch:21.02-py3
 WORKDIR /path/to/working/directory/text2speech/
@@ -131,6 +131,8 @@ $ tail -f log.txt
 ``` 
 
 ### Inference
+``` 
+``` 
 
 
 
