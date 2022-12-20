@@ -142,9 +142,9 @@ def parse_args(parser):
                      help='Define symbol set for input text')
     txt.add_argument('--p-arpabet', type=float, default=1.0, help='')
     txt.add_argument('--heteronyms-path', type=str,
-                     default='data/cmudict/heteronyms', help='')
+                     default='data/cmudict/heteronyms_tr', help='')
     txt.add_argument('--cmudict-path', type=str,
-                     default='data/cmudict/cmudict-0.7b', help='')
+                     default='data/cmudict/cmudict_tr', help='')
     return parser
 
 
