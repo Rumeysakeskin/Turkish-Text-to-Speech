@@ -131,9 +131,16 @@ $ tail -f log.txt
 ``` 
 
 ### Inference
+Run the following command to synthesize audio from raw text with mel-spectrogram generator.
 ``` 
+python inference.py --cuda \
+  --hifigan /Hifigan/results/hifigan_tr22khz/hifigan_gen_checkpoint.pt \
+  --fastpitch /Fastpitch/saved_fastpicth_models/FastPitch_checkpoint.pt \
+  -i test_text.txt \
+  -o wavs/
 ``` 
-
+The speech is generated from a file passed with the `-i` argument.
+The output audio will be stored in the path specified by the `-o` argument.
 
 
 
