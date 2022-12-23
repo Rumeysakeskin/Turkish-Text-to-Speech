@@ -1,7 +1,7 @@
 # Turkish Text-to-Speech
 ## Table Of Contents
 - [Setup](#Setup)
-- [Phonetical Conversion and Normalization for Turkish](#Phonetical-Conversion-and-Normalization-for-Turkish)
+- [Text Preprocessing (Phonetical Conversion and Normalization for Turkish)](#Text-Preprocessing-(Phonetical-Conversion-and-Normalization-for-Turkish))
 - [Data Preperation](#Data-Preperation)
 - [Training Fastpitch from scratch (Spectrogram Generator)](#Training-Fastpitch-from-scratch-(Spectrogram-Generator))
 - [Fine-tuning the model with HiFi-GAN (Waveforms Generator)](#Fine-tuning-the-model-with-HiFi-GAN)
@@ -28,8 +28,9 @@ $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
 3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
 
-### Phonetical Conversion and Normalization for Turkish
-In order to train speech synthesis models, sounds and phoneme sequences expressing sounds are needed. 
+### Text Preprocessing (Phonetical Conversion and Normalization for Turkish)
+In order to train speech synthesis models, sounds and phoneme sequences expressing sounds are needed. That's wyh in the first step, 
+the input text is encoded into a list of symbols. In this study, we will use Turkish characters and phonemes as the symbols.
 Since Turkish is a phonetic language, words are expressed as they are read. That is, character sequences are constructed words in Turkish. 
 In non-phonetic languages such as English, words can be expressed with phonemes.
 To synthesize Turkish speech with English data, the words in the English dataset first must be phonetically translated into Turkish. 
@@ -83,6 +84,7 @@ The complete dataset has the following structure:
 ```
 
 ### Training Fastpitch from scratch (Spectrogram Generator)
+
 The training will produce a FastPitch model capable of generating mel-spectrograms from raw text. It will be serialized as a single `.pt` checkpoint file, along with a series of intermediate checkpoints.
 ```
 $ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \ 
@@ -94,6 +96,8 @@ $ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \
 ```
 
 ### Fine-tuning the model with HiFi-GAN
+The last step is converting the spectrogram into the waveform. The process to generate speech from spectrogram is also called Vocoder.
+
 Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt).
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
