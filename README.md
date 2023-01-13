@@ -8,7 +8,7 @@
 - [Inference](#Inference)
 
 ### Setup
-This repository contains a [Dockerfile](https://github.com/Rumeysakeskin/text2speech/blob/main/docker/Dockerfile) that extends the PyTorch 21.02-py3 NGC container and encapsulates some dependencies. 
+This repository contains a [Dockerfile](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/docker/Dockerfile) that extends the PyTorch 21.02-py3 NGC container and encapsulates some dependencies. 
 To create your own container, choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as following format:
 ```
 FROM nvcr.io/nvidia/pytorch:21.02-py3
@@ -34,7 +34,7 @@ the input text is encoded into a list of symbols. In this study, we will use Tur
 Since Turkish is a phonetic language, words are expressed as they are read. That is, character sequences are constructed words in Turkish. 
 In non-phonetic languages such as English, words can be expressed with phonemes.
 To synthesize Turkish speech with English data, the words in the English dataset first must be phonetically translated into Turkish. 
-- In this study, [cmudict_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/cmudict_tr) and [heteronyms_tr](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/cmudict/heteronyms_tr) were used. CMUDict ([Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)) is a dictionary that phonetically expresses about 1.5M words in Turkish.
+- In this study, [cmudict_tr](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/cmudict/cmudict_tr) and [heteronyms_tr](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/cmudict/heteronyms_tr) were used. CMUDict ([Turkish phonetic lexicon](https://github.com/DuyguA/computational_linguistics)) is a dictionary that phonetically expresses about 1.5M words in Turkish.
 - The following phonemes represent the Turkish pronunciation of the phonemes.
 ```
 valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e', 'e:', 'f', 'g', 'gj', 'h', 'i', 'i:', 'j',
@@ -42,7 +42,7 @@ valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e',
 ```
 - Text normalization converts text from written form into its verbalized form, and it is an essential preprocessing step before text-to-speech synthesis.
 It ensures that TTS can handle all input texts without skipping unknown symbols.
-In this study, [text normalized](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) for Turkish utterances.
+In this study, [text normalized](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) for Turkish utterances.
 
 
 ### Data Preperation
@@ -98,7 +98,7 @@ $ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \
 ### Fine-tuning the model with HiFi-GAN
 The last step is converting the spectrogram into the waveform. The process to generate speech from spectrogram is also called Vocoder.
 
-Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/text2speech/blob/main/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt).
+Some mel-spectrogram generators are prone to model bias. As the spectrograms differ from the true data on which HiFi-GAN was trained, the quality of the generated audio might suffer. In order to overcome this problem, a HiFi-GAN model can be fine-tuned on the outputs of a particular mel-spectrogram generator in order to adapt to this bias. In this section we will perform fine-tuning to [FastPitch outputs](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/saved_fastpitch_models/FastPitch_checkpoint.pt).
 
 1. Generate mel-spectrograms for all utterances in the dataset with the FastPitch model
 - Copy best-performed FastPitch output .pt file in the `text2speech/Hifigan/data/pretrained_fastpicth_model/` directory.
