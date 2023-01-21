@@ -42,7 +42,7 @@ valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e',
 ```
 - Text normalization converts text from written form into its verbalized form, and it is an essential preprocessing step before text-to-speech synthesis.
 It ensures that TTS can handle all input texts without skipping unknown symbols.
-In this study, [text normalized](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) for Turkish utterances.
+[Text normalization](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) is applied for Turkish utterances.
 
 
 ### Data Preperation
