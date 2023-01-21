@@ -129,13 +129,13 @@ This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned t
   --learning_rate 0.0003 --lr_decay 0.9998 --validation_interval 10 > log.txt
  ```
   
-3. Open another terminal and track log as following:
+3. Open another terminal and track log as following
 ``` 
 $ tail -f log.txt 
 ``` 
 
 ### Inference
-Run the following command to synthesize audio from raw text with mel-spectrogram generator.
+Run the following command to synthesize audio from raw text with mel-spectrogram generator
 ``` 
 python inference.py --cuda \
   --hifigan /Hifigan/results/hifigan_tr22khz/hifigan_gen_checkpoint.pt \
