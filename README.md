@@ -6,7 +6,7 @@
 - [Training Fastpitch from scratch (Spectrogram Generator)](#Training-Fastpitch-from-scratch-(Spectrogram-Generator))
 - [Fine-tuning the model with HiFi-GAN (Waveforms Generator)](#Fine-tuning-the-model-with-HiFi-GAN)
 - [Inference](#Inference)
-
+---
 ### Setup
 This repository contains a [Dockerfile](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/docker/Dockerfile) that extends the PyTorch 21.02-py3 NGC container and encapsulates some dependencies. 
 To create your own container, choose a PyTorch container from [NVIDIA PyTorch Container Versions](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-11.html#rel-22-11) and create a Dockerfile as following format:
@@ -27,7 +27,7 @@ $ python -m ipykernel install --user --name=torcht2s
 $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
 3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
-
+---
 ### Text Preprocessing (Phonetical Conversion and Normalization for Turkish)
 In order to train speech synthesis models, sounds and phoneme sequences expressing sounds are needed. That's wyh in the first step, 
 the input text is encoded into a list of symbols. In this study, we will use Turkish characters and phonemes as the symbols.
@@ -44,7 +44,7 @@ valid_symbols = ['1', '1:', '2', '2:', '5', 'a', 'a:', 'b', 'c', 'd', 'dZ', 'e',
 It ensures that TTS can handle all input texts without skipping unknown symbols.
 [Text normalization](https://github.com/Rumeysakeskin/Turkish-Text-to-Speech/blob/main/text2speech/Fastpitch/common/text/turkish_text_normalization/turkish_text_normalizer.py) is applied for Turkish utterances.
 
-
+---
 ### Data Preperation
 To speed-up training, those could be generated during the pre-processing step and read directly from the disk during training.
 Follow these steps to use custom dataset.
@@ -82,7 +82,7 @@ The complete dataset has the following structure:
 ├── tts_pitch_data_train.txt
 ├── tts_pitch_data_val.txt
 ```
-
+---
 ### Training Fastpitch from scratch (Spectrogram Generator)
 
 The training will produce a FastPitch model capable of generating mel-spectrograms from raw text. It will be serialized as a single `.pt` checkpoint file, along with a series of intermediate checkpoints.
@@ -94,7 +94,7 @@ $ python train.py --cuda --amp --p-arpabet 1.0 --dataset-path dataset \
                 --epochs 1000 --learning-rate 0.001 --batch-size 32 \
                 --load-pitch-from-disk
 ```
-
+---
 ### Fine-tuning the model with HiFi-GAN
 The last step is converting the spectrogram into the waveform. The process to generate speech from spectrogram is also called Vocoder.
 
@@ -133,7 +133,7 @@ This step will produce another `.pt` HiFi-GAN model checkpoint file fine-tuned t
 ```python 
 $ tail -f log.txt 
 ``` 
-
+---
 ### Inference
 Run the following command to synthesize audio from raw text with mel-spectrogram generator
 ```python 
