@@ -1,2 +1,2 @@
-*.* linguist-language=python
+*.3 linguist-documentation
 *.h5 filter=lfs diff=lfs merge=lfs -text
