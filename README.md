@@ -17,6 +17,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 ```
 1. Build and run docker
+
+Go to the `/path/to/working/directory/text2speech/docker`
 ```python
 $ docker build --no-cache -t torcht2s .
 $ docker run -it --rm --gpus all -p 2222:8888 -v /path/to/working/directory/text2speech:/path/to/working/directory/text2speech torcht2s
