@@ -17,6 +17,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 ```
 1. Build and run docker
+
+Go to the `/path/to/working/directory/text2speech/docker`
 ```python
 $ docker build --no-cache -t torcht2s .
 $ docker run -it --rm --gpus all -p 2222:8888 -v /path/to/working/directory/text2speech:/path/to/working/directory/text2speech torcht2s
@@ -26,7 +28,13 @@ $ docker run -it --rm --gpus all -p 2222:8888 -v /path/to/working/directory/text
 $ python -m ipykernel install --user --name=torcht2s
 $ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
-3. Open a browser from your local machine and navigate to `127.0.0.1:2222/?token=${TOKEN}` and enter your token specified in your terminal.
+3. Open a browser from your local machine and navigate to `${HOSTNAME}:2222/?token=${TOKEN}` and enter your token specified in your terminal.
+
+**Note that to find hostname:**
+```python
+$ hostname -I
+>> HOSTNAME=${111.0.0.0}
+```
 ---
 ### Text Preprocessing (Phonetical Conversion and Normalization for Turkish)
 In order to train speech synthesis models, sounds and phoneme sequences expressing sounds are needed. That's wyh in the first step, 
